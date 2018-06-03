@@ -1,0 +1,38 @@
+{
+  "name": "football-stats-viewer",
+  "version": "0.1.0",
+  "description": "A web app to view football stats",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon server/server.js",
+    "watch": "webpack --mode development --config webpack.config.js --watch"
+  },
+  "keywords": [
+    "node",
+    "react",
+    "mongodb"
+  ],
+  "author": "Alapan Mukherjee",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "express": "^4.16.3",
+    "lodash": "^4.17.10",
+    "mongoose": "^5.1.1",
+    "nodemon": "^1.17.5",
+    "react": "^16.3.2",
+    "webpack": "^4.8.3",
+    "webpack-cli": "^3.0.1"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "bootstrap": "^4.1.1",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.14.3",
+    "react-dom": "^16.4.0"
+  }
+}
