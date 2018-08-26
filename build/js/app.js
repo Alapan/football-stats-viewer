@@ -157,6 +157,32 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _styles = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/styles/index.js");
+
+var _Table = __webpack_require__(/*! @material-ui/core/Table */ "./node_modules/@material-ui/core/Table/index.js");
+
+var _Table2 = _interopRequireDefault(_Table);
+
+var _TableHead = __webpack_require__(/*! @material-ui/core/TableHead */ "./node_modules/@material-ui/core/TableHead/index.js");
+
+var _TableHead2 = _interopRequireDefault(_TableHead);
+
+var _TableBody = __webpack_require__(/*! @material-ui/core/TableBody */ "./node_modules/@material-ui/core/TableBody/index.js");
+
+var _TableBody2 = _interopRequireDefault(_TableBody);
+
+var _TableRow = __webpack_require__(/*! @material-ui/core/TableRow */ "./node_modules/@material-ui/core/TableRow/index.js");
+
+var _TableRow2 = _interopRequireDefault(_TableRow);
+
+var _TableCell = __webpack_require__(/*! @material-ui/core/TableCell */ "./node_modules/@material-ui/core/TableCell/index.js");
+
+var _TableCell2 = _interopRequireDefault(_TableCell);
+
+var _Paper = __webpack_require__(/*! @material-ui/core/Paper */ "./node_modules/@material-ui/core/Paper/index.js");
+
+var _Paper2 = _interopRequireDefault(_Paper);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -165,23 +191,161 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+
 var Container = function (_React$Component) {
   _inherits(Container, _React$Component);
 
   function Container() {
     _classCallCheck(this, Container);
 
-    return _possibleConstructorReturn(this, (Container.__proto__ || Object.getPrototypeOf(Container)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Container.__proto__ || Object.getPrototypeOf(Container)).call(this));
+
+    _this.state = {
+      footballData: ''
+    };
+    return _this;
   }
 
   _createClass(Container, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      // 2000 is the World Cup ID
+      $.ajax({
+        url: 'http://api.football-data.org/v2/competitions/2000/matches',
+        method: 'GET',
+        beforeSend: function beforeSend(xhr) {
+          xhr.setRequestHeader('X-Auth-Token', '18531bdfdc0b4ba9a732ebf5e62abf4f');
+        },
+        success: function success(data) {
+          _this2.setState({
+            footballData: data
+          });
+        }
+      });
+    }
+  }, {
+    key: 'renderTable',
+    value: function renderTable() {
+      var matches = this.state.footballData.matches;
+      return _react2.default.createElement(
+        _Paper2.default,
+        null,
+        _react2.default.createElement(
+          _Table2.default,
+          null,
+          _react2.default.createElement(
+            _TableHead2.default,
+            null,
+            _react2.default.createElement(
+              _TableRow2.default,
+              null,
+              _react2.default.createElement(
+                _TableCell2.default,
+                null,
+                'Date'
+              ),
+              _react2.default.createElement(
+                _TableCell2.default,
+                null,
+                'Stage'
+              ),
+              _react2.default.createElement(
+                _TableCell2.default,
+                null,
+                'Group'
+              ),
+              _react2.default.createElement(
+                _TableCell2.default,
+                null,
+                'Team 1'
+              ),
+              _react2.default.createElement(
+                _TableCell2.default,
+                null,
+                'Team 2'
+              ),
+              _react2.default.createElement(
+                _TableCell2.default,
+                null,
+                'Winner'
+              ),
+              _react2.default.createElement(
+                _TableCell2.default,
+                null,
+                'Score'
+              )
+            )
+          ),
+          _react2.default.createElement(
+            _TableBody2.default,
+            null,
+            matches.map(function (match) {
+              return _react2.default.createElement(
+                _TableRow2.default,
+                { key: match.id },
+                _react2.default.createElement(
+                  _TableCell2.default,
+                  null,
+                  match.utcDate
+                ),
+                _react2.default.createElement(
+                  _TableCell2.default,
+                  null,
+                  match.stage
+                ),
+                _react2.default.createElement(
+                  _TableCell2.default,
+                  null,
+                  match.group
+                ),
+                _react2.default.createElement(
+                  _TableCell2.default,
+                  null,
+                  match.homeTeam.name
+                ),
+                _react2.default.createElement(
+                  _TableCell2.default,
+                  null,
+                  match.awayTeam.name
+                ),
+                function () {
+                  if (match.score.winner === 'HOME_TEAM') {
+                    return _react2.default.createElement(
+                      _TableCell2.default,
+                      null,
+                      match.homeTeam.name
+                    );
+                  } else {
+                    return _react2.default.createElement(
+                      _TableCell2.default,
+                      null,
+                      match.awayTeam.name
+                    );
+                  }
+                }(),
+                _react2.default.createElement(
+                  _TableCell2.default,
+                  null,
+                  match.score.fullTime.homeTeam,
+                  '-',
+                  match.score.fullTime.awayTeam
+                )
+              );
+            })
+          )
+        )
+      );
+    }
+  }, {
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(
-        'div',
-        null,
-        'IN CONTAINER'
-      );
+      if (this.state.footballData) {
+        return this.renderTable();
+      }
+      return null;
     }
   }]);
 
