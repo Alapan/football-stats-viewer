@@ -153,11 +153,12 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _templateObject = _taggedTemplateLiteral(['\n      background-image: url(\'build/', '\');\n      background-repeat: no-repeat;\n      background-position: center;\n      background-attachment: fixed;\n      background-size: cover;\n    '], ['\n      background-image: url(\'build/', '\');\n      background-repeat: no-repeat;\n      background-position: center;\n      background-attachment: fixed;\n      background-size: cover;\n    ']),
+    _templateObject2 = _taggedTemplateLiteral(['\n      color: white !important;\n    '], ['\n      color: white !important;\n    ']);
+
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
-
-var _styles = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/styles/index.js");
 
 var _Table = __webpack_require__(/*! @material-ui/core/Table */ "./node_modules/@material-ui/core/Table/index.js");
 
@@ -183,7 +184,13 @@ var _Paper = __webpack_require__(/*! @material-ui/core/Paper */ "./node_modules/
 
 var _Paper2 = _interopRequireDefault(_Paper);
 
+var _styledComponents = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+
+var _styledComponents2 = _interopRequireDefault(_styledComponents);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -192,6 +199,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+//import { withStyles } from '@material-ui/core/styles';
 
 var Container = function (_React$Component) {
   _inherits(Container, _React$Component);
@@ -229,9 +237,15 @@ var Container = function (_React$Component) {
   }, {
     key: 'renderTable',
     value: function renderTable() {
+      var backgroundImage = __webpack_require__(/*! ../img/logo.jpg */ "./client/img/logo.jpg");
+
+      var StyledPaper = (0, _styledComponents2.default)(_Paper2.default)(_templateObject, backgroundImage);
+
+      var StyledTableCell = (0, _styledComponents2.default)(_TableCell2.default)(_templateObject2);
+
       var matches = this.state.footballData.matches;
       return _react2.default.createElement(
-        _Paper2.default,
+        StyledPaper,
         null,
         _react2.default.createElement(
           _Table2.default,
@@ -243,37 +257,37 @@ var Container = function (_React$Component) {
               _TableRow2.default,
               null,
               _react2.default.createElement(
-                _TableCell2.default,
+                StyledTableCell,
                 null,
                 'Date'
               ),
               _react2.default.createElement(
-                _TableCell2.default,
+                StyledTableCell,
                 null,
                 'Stage'
               ),
               _react2.default.createElement(
-                _TableCell2.default,
+                StyledTableCell,
                 null,
                 'Group'
               ),
               _react2.default.createElement(
-                _TableCell2.default,
+                StyledTableCell,
                 null,
                 'Team 1'
               ),
               _react2.default.createElement(
-                _TableCell2.default,
+                StyledTableCell,
                 null,
                 'Team 2'
               ),
               _react2.default.createElement(
-                _TableCell2.default,
+                StyledTableCell,
                 null,
                 'Winner'
               ),
               _react2.default.createElement(
-                _TableCell2.default,
+                StyledTableCell,
                 null,
                 'Score'
               )
@@ -283,55 +297,64 @@ var Container = function (_React$Component) {
             _TableBody2.default,
             null,
             matches.map(function (match) {
+              var id = match.id,
+                  homeTeam = match.homeTeam,
+                  awayTeam = match.awayTeam,
+                  utcDate = match.utcDate,
+                  stage = match.stage,
+                  group = match.group,
+                  score = match.score;
+
+
               return _react2.default.createElement(
                 _TableRow2.default,
-                { key: match.id },
+                { key: id },
                 _react2.default.createElement(
-                  _TableCell2.default,
+                  StyledTableCell,
                   null,
-                  match.utcDate
+                  utcDate
                 ),
                 _react2.default.createElement(
-                  _TableCell2.default,
+                  StyledTableCell,
                   null,
-                  match.stage
+                  stage
                 ),
                 _react2.default.createElement(
-                  _TableCell2.default,
+                  StyledTableCell,
                   null,
-                  match.group
+                  group
                 ),
                 _react2.default.createElement(
-                  _TableCell2.default,
+                  StyledTableCell,
                   null,
-                  match.homeTeam.name
+                  homeTeam.name
                 ),
                 _react2.default.createElement(
-                  _TableCell2.default,
+                  StyledTableCell,
                   null,
-                  match.awayTeam.name
+                  awayTeam.name
                 ),
                 function () {
-                  if (match.score.winner === 'HOME_TEAM') {
+                  if (score.winner === 'HOME_TEAM') {
                     return _react2.default.createElement(
-                      _TableCell2.default,
+                      StyledTableCell,
                       null,
-                      match.homeTeam.name
+                      homeTeam.name
                     );
                   } else {
                     return _react2.default.createElement(
-                      _TableCell2.default,
+                      StyledTableCell,
                       null,
-                      match.awayTeam.name
+                      awayTeam.name
                     );
                   }
                 }(),
                 _react2.default.createElement(
-                  _TableCell2.default,
+                  StyledTableCell,
                   null,
-                  match.score.fullTime.homeTeam,
+                  score.fullTime.homeTeam,
                   '-',
-                  match.score.fullTime.awayTeam
+                  score.fullTime.awayTeam
                 )
               );
             })
@@ -353,6 +376,17 @@ var Container = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = Container;
+
+/***/ }),
+
+/***/ "./client/img/logo.jpg":
+/*!*****************************!*\
+  !*** ./client/img/logo.jpg ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "/static/logo.jpg";
 
 /***/ }),
 

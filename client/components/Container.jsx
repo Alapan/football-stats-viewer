@@ -1,12 +1,13 @@
 import React from 'react';
 const $ = require('jquery');
-import { withStyles } from '@material-ui/core/styles';
+//import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import Paper from '@material-ui/core/Paper';
+import styled from 'styled-components';
 
 export default class Container extends React.Component {
 
@@ -34,46 +35,78 @@ export default class Container extends React.Component {
   }
 
   renderTable() {
+    const backgroundImage = require('../img/logo.jpg');
+
+    const StyledPaper = styled(Paper)`
+      background-image: url('build/${backgroundImage}');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-attachment: fixed;
+      background-size: cover;
+    `;
+
+    const StyledTableCell = styled(TableCell)`
+      color: white !important;
+    `;
+
     const matches = this.state.footballData.matches;
     return (
-      <Paper>
+      <StyledPaper>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Date</TableCell>
-              <TableCell>Stage</TableCell>
-              <TableCell>Group</TableCell>
-              <TableCell>Team 1</TableCell>
-              <TableCell>Team 2</TableCell>
-              <TableCell>Winner</TableCell>
-              <TableCell>Score</TableCell>
+              <StyledTableCell>Date</StyledTableCell>
+              <StyledTableCell>Stage</StyledTableCell>
+              <StyledTableCell>Group</StyledTableCell>
+              <StyledTableCell>Team 1</StyledTableCell>
+              <StyledTableCell>Team 2</StyledTableCell>
+              <StyledTableCell>Winner</StyledTableCell>
+              <StyledTableCell>Score</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             { matches.map(match => {
-          	  return (
-                <TableRow key={match.id}>
-                  <TableCell>{match.utcDate}</TableCell>
-                  <TableCell>{match.stage}</TableCell>
-                  <TableCell>{match.group}</TableCell>
-                  <TableCell>{match.homeTeam.name}</TableCell>
-                  <TableCell>{match.awayTeam.name}</TableCell>
+              const {
+                id,
+                homeTeam,
+                awayTeam,
+                utcDate,
+                stage,
+                group,
+                score
+              } = match;
+
+              return (
+                <TableRow key={id}>
+                  <StyledTableCell>{utcDate}</StyledTableCell>
+                  <StyledTableCell>{stage}</StyledTableCell>
+                  <StyledTableCell>{group}</StyledTableCell>
+                  <StyledTableCell>{homeTeam.name}</StyledTableCell>
+                  <StyledTableCell>{awayTeam.name}</StyledTableCell>
                   {( () => {
-                    if (match.score.winner === 'HOME_TEAM') {
-                      return <TableCell>{match.homeTeam.name}</TableCell>;
+                    if (score.winner === 'HOME_TEAM') {
+                      return (
+                        <StyledTableCell>
+                          {homeTeam.name}
+                        </StyledTableCell>
+                      );
                     } else {
-                      return <TableCell>{match.awayTeam.name}</TableCell>;
+                      return (
+                        <StyledTableCell>
+                          {awayTeam.name}
+                        </StyledTableCell>
+                      );
                     }
                   })()}
-                  <TableCell>
-                    {match.score.fullTime.homeTeam}-{match.score.fullTime.awayTeam}
-                  </TableCell>
+                  <StyledTableCell>
+                    {score.fullTime.homeTeam}-{score.fullTime.awayTeam}
+                  </StyledTableCell>
                 </TableRow>
               );
              })}
           </TableBody>
         </Table>
-      </Paper>
+      </StyledPaper>
     );
   }
 

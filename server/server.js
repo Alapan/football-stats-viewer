@@ -7,6 +7,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use('/build', express.static('build'));
+app.use('static', express.static('build'));
 
 app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, '..', 'client/templates/home.html'));
