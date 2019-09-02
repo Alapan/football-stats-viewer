@@ -1,6 +1,5 @@
 import React from 'react';
 const $ = require('jquery');
-//import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
@@ -46,12 +45,12 @@ export default class Container extends React.Component {
     `;
 
     const StyledTableCell = styled(TableCell)`
-      color: white !important;
+      color: black !important;
     `;
 
     const matches = this.state.footballData.matches;
     return (
-      <StyledPaper>
+      <Paper>
         <Table>
           <TableHead>
             <TableRow>
@@ -106,7 +105,7 @@ export default class Container extends React.Component {
              })}
           </TableBody>
         </Table>
-      </StyledPaper>
+      </Paper>
     );
   }
 
